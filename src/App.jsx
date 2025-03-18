@@ -1,16 +1,12 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-import Signin from "./Components/Auth/Signin.jsx"
+import Routing from "./routes/Routing.jsx";
+import { BrowserRouter } from "react-router-dom";
+import React from "react";
 
 function App() {
   return (
-    
-       
-        <div>
-        <Signin/>
-      </div>  
-     
-    
+   <BrowserRouter>
+    <Routing/>
+   </BrowserRouter>
   );
 }
 

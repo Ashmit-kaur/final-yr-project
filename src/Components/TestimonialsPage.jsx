@@ -3,16 +3,12 @@ import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-
-
-{
+export function Home() {
   return (
     <>
-     
-
       <section className="container text-center mt-5 ">
         <h1 className="font-weight-bold my-3">Welcome to Gimme Comments</h1>
 
@@ -37,11 +33,10 @@ import { useNavigate } from 'react-router-dom';
               Get Started
             </button>
           </div>
-         
         </div>
       </section>
     </>
   );
-};
+}
 
 export default Home;
