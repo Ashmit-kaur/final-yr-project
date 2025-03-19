@@ -1,45 +1,79 @@
+import axios from "axios";
 import { useState } from "react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
+const initialValues = {
+  name: "",
+  email: "",
+  password: "",
+};
 
 const Signup = () => {
-  const [name,setName]=useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmpass,setConfirmpass]=useState("");
+  const [formData, setformData] = useState(initialValues);
   const [error, setError] = useState("");
+  const [confirmpass, setConfirmpass] = useState("");
+  const [showpass, setshowpass] = useState(false);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setformData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (email === "user@example.com" && password === "password123") {
-      alert("Sign in successful!");
-      setError("");
-    } else {
-      setError("Invalid email or password");
+    try {
+      if (formData.password !== confirmpass) {
+        setError("Password and confirm password didn't match.");
+      } else {
+        setError("");
+        const result = await axios.post(
+          "http://localhost:3000/api/v1/auth/signup",
+          formData
+        );
+        setError("");
+        alert(result.data.message);
+        navigate("/verify-account");
+      }
+    } catch (error) {
+      setError(
+        error.response?.data?.message ||
+          "Something went wrong. Please try again."
+      );
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <p className="text-3xl font-bold text-center text-purple-600 mb-6">Registration | Developer</p>
+        <p className="text-3xl font-bold text-center text-purple-600 mb-6">
+          Registration | Developer
+        </p>
         <p className="font-medium">Please register with your details</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name input */}
           <div>
             <label
-              htmlFor="email"
+              htmlFor="name"
               className="block text-sm font-medium text-black"
             >
               Name
             </label>
             <input
-              type="name"
+              type="text"
               id="name"
+              name="name"
               placeholder="developer"
               className="mt-1 block w-full border-black rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={formData.name}
+              onChange={handleInputChange}
               required
             />
           </div>
@@ -55,10 +89,11 @@ const Signup = () => {
             <input
               type="email"
               id="email"
+              name="email"
               placeholder="developer@gmail.com"
               className="mt-1 block w-full border-black rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={handleInputChange}
               required
             />
           </div>
@@ -72,19 +107,30 @@ const Signup = () => {
               Password
             </label>
             <input
-              type="password"
+              type={showpass ? "text" : "password"}
               id="password"
+              name="password"
               placeholder="Abc#123"
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleInputChange}
               required
             />
+            {/* <span
+              className=" cursor-pointer text-gray-600"
+              onClick={() => setshowpass((prev) => !prev)}
+            >
+              <i
+                className={`fa ${showpass ? "fa-eye-slash" : "fa-eye"}`}
+                aria-hidden="true"
+              ></i>
+            </span> */}
           </div>
 
+          {/* Confirm password */}
           <div>
             <label
-              htmlFor="password"
+              htmlFor="confirmpass"
               className="block text-sm font-medium text-black"
             >
               Confirm Password
@@ -92,7 +138,8 @@ const Signup = () => {
             <input
               type="password"
               placeholder="Abc#123"
-              id="password"
+              name="confirmpass"
+              id="confirmpass"
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
               value={confirmpass}
               onChange={(e) => setConfirmpass(e.target.value)}

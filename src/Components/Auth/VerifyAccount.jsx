@@ -1,22 +1,45 @@
 import { useState } from "react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const VerifyAccount = () => {
 
   const [email, setEmail] = useState("");
   const [otp,setOtp]=useState("");
   const [error, setError] = useState("");
+  const [loading,setloading]=useState(false)
+  const [success,setsuccess]=useState(false)
+  const navigate=useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
 
-    if (email === "user@example.com" && password === "password123") {
-      alert("Sign in successful!");
-      setError("");
-    } else {
-      setError("Invalid email or password");
+    try{
+        setloading(true)
+        const result=await axios.post("http://localhost:3000/api/v1/auth/verifyotp",{email,userotp:otp});
+        alert(result.data.message)
+        navigate("/signin")
+    }catch(error){
+        console.log(error.response?.data?.message || error.message);
+        setError(error.response?.data?.message || "Something went wrong. Please try again.");
     }
+    setloading(false)
   };
+
+  const handlesendotp=async (e)=>{
+    e.preventDefault()
+    try{
+        setloading(true)
+        const result=await axios.post("http://localhost:3000/api/v1/auth/generateotp",{email})
+        alert(result.data.message)
+        setsuccess(true)
+    }catch(error){
+        console.log(error.response?.data?.message || error.message);
+        setError(error.response?.data?.message || "Something went wrong. Please try again.");
+    }
+    setloading(false)
+  }
 
   return (
     
@@ -46,8 +69,19 @@ const VerifyAccount = () => {
           </div>
 
           <div>
+            <button
+              type="submit"
+              className={`w-full ${success?"hidden":"block"} bg-indigo-600 text-white py-2 px-4 rounded-xl hover:bg-indigo-700 `}
+              onClick={handlesendotp}
+              disabled={loading}
+            >
+              {loading?"Sending otp...":"Send otp"}
+            </button>
+          </div>
+
+          <div className={`${success ? "block" : "hidden"}`}>
             <label
-              htmlFor="password"
+              htmlFor="otp"
               className="block text-sm font-medium text-black"
             >
               Enter OTP
@@ -77,9 +111,10 @@ const VerifyAccount = () => {
           <div>
             <button
               type="submit"
-              className="w-full bg-indigo-600 text-white py-2 px-4 rounded-xl hover:bg-indigo-700 "
+              className={`${success ? "block" : "hidden"} w-full bg-indigo-600 text-white py-2 px-4 rounded-xl hover:bg-indigo-700 `}
+              disabled={loading}
             >
-              Verify
+              {loading?"Verifying":"Verify"}
             </button>
           </div>
 
