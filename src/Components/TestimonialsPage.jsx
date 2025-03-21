@@ -1,42 +1,65 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
-import React from "react";
-import { useNavigate } from "react-router-dom";
+const testimonials = [
+  {
+    name: "John Doe",
+    text: "This service changed my life! Highly recommended.",
+    company: "Acme Corp"
+  },
+  {
+    name: "Jane Smith",
+    text: "An incredible experience from start to finish.",
+    company: "Tech Innovations"
+  },
+  {
+    name: "Emily Johnson",
+    text: "I couldn't be happier with the results!",
+    company: "Creative Studio"
+  }
+];
 
-export function Home() {
+export default function TestimonialLanding() {
   return (
-    <>
-      <section className="container text-center mt-5 ">
-        <h1 className="font-weight-bold my-3">Welcome to Gimme Comments</h1>
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
+      <motion.h1 
+        className="text-4xl font-bold text-center my-6" 
+        initial={{ opacity: 0, y: -50 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        transition={{ duration: 0.5 }}
+      >
+        What Our Customers Say
+      </motion.h1>
 
-        <div className="row g-0 rounded-4 overflow-hidden shadow-lg">
-          <div className="col-12 col-md-6 bg-light text-dark fs-5 p-4">
-            <p>
-              <span className="bg-dark fw-light px-2">Gimme Comments</span> is
-              an innovative and cutting-edge web application that revolutionizes
-              the way developers incorporate comments into their projects. With
-              a sleek and user-friendly interface, Gimme Comments aims to
-              simplify the process of integrating robust commenting
-              functionality into websites, applications, and other software
-              projects. This powerful and scalable comments server is designed
-              to enhance collaboration, feedback gathering, and engagement among
-              developers and users.
-            </p>
-            <button
-              type="button"
-              className="btn btn-primary my-4 fw-bold d-block d-inline-flex"
-              onClick={handleStart}
-            >
-              Get Started
-            </button>
-          </div>
-        </div>
-      </section>
-    </>
+      <div className="grid md:grid-cols-3 gap-6 max-w-4xl">
+        {testimonials.map((testimonial, index) => (
+          <motion.div 
+            key={index} 
+            initial={{ opacity: 0, scale: 0.9 }} 
+            animate={{ opacity: 1, scale: 1 }} 
+            transition={{ duration: 0.5, delay: index * 0.2 }}
+          >
+            <Card className="bg-white p-4 shadow-lg rounded-2xl">
+              <CardContent>
+                <p className="text-lg italic">"{testimonial.text}"</p>
+                <p className="mt-4 font-bold">- {testimonial.name}, {testimonial.company}</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+
+      <motion.div 
+        className="mt-8" 
+        initial={{ opacity: 0, y: 50 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        transition={{ duration: 0.5 }}
+      >
+        <Button className="px-6 py-3 text-lg rounded-xl shadow-md">
+          Get Started Today
+        </Button>
+      </motion.div>
+    </div>
   );
 }
-
-export default Home;
