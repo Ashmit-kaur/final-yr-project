@@ -35,6 +35,7 @@ const Footer = () => {
             <a href="#" className="text-gray-400 hover:text-white"><FaLinkedinIn size={20} /></a>
           </div>
         </div>
+        
       </div>
 
       {/* Copyright */}
