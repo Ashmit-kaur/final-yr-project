@@ -1,7 +1,12 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { FaEyeSlash } from "react-icons/fa";
+
+import { FaEye } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { login, selectUser } from "../../redux/authSlice";
 
 const initialValues = {
   name: "",
@@ -14,8 +19,17 @@ const Signup = () => {
   const [error, setError] = useState("");
   const [confirmpass, setConfirmpass] = useState("");
   const [showpass, setshowpass] = useState(false);
+  const [loading, setloading] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch=useDispatch()
+  const user=useSelector(selectUser)
+
+  useEffect(()=>{
+    if(user){
+      navigate("/dashboard")
+    }
+  },[navigate])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -29,6 +43,7 @@ const Signup = () => {
     e.preventDefault();
 
     try {
+      setloading(true);
       if (formData.password !== confirmpass) {
         setError("Password and confirm password didn't match.");
       } else {
@@ -38,6 +53,8 @@ const Signup = () => {
           formData
         );
         setError("");
+        localStorage.setItem('access-token',result.data.token)
+        dispatch(login({user:result.data.user,token:result.data.token}))
         alert(result.data.message);
         navigate("/verify-account");
       }
@@ -47,6 +64,7 @@ const Signup = () => {
           "Something went wrong. Please try again."
       );
     }
+    setloading(false);
   };
 
   return (
@@ -99,7 +117,7 @@ const Signup = () => {
           </div>
 
           {/* Password Input */}
-          <div>
+          <div className="relative">
             <label
               htmlFor="password"
               className="block text-sm font-medium text-black"
@@ -111,20 +129,17 @@ const Signup = () => {
               id="password"
               name="password"
               placeholder="Abc#123"
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2 pr-10"
               value={formData.password}
               onChange={handleInputChange}
               required
             />
-            {/* <span
-              className=" cursor-pointer text-gray-600"
+            <span
+              className="absolute inset-y-36 right-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-600"
               onClick={() => setshowpass((prev) => !prev)}
             >
-              <i
-                className={`fa ${showpass ? "fa-eye-slash" : "fa-eye"}`}
-                aria-hidden="true"
-              ></i>
-            </span> */}
+              {showpass ? <FaEye /> : <FaEyeSlash />}
+            </span>
           </div>
 
           {/* Confirm password */}
@@ -156,7 +171,7 @@ const Signup = () => {
               type="submit"
               className="w-full bg-indigo-600 text-white py-2 px-4 rounded-xl hover:bg-indigo-700 "
             >
-              Register
+              {loading ? "Registering..." : "Register"}
             </button>
           </div>
         </form>

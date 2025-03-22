@@ -4,9 +4,9 @@ import React from "react";
 
 function App() {
   return (
-   <BrowserRouter>
-    <Routing/>
-   </BrowserRouter>
+      <BrowserRouter>
+        <Routing />
+      </BrowserRouter>
   );
 }
 
