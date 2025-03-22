@@ -35,15 +35,5 @@ const Footer = () => {
             <a href="#" className="text-gray-400 hover:text-white"><FaLinkedinIn size={20} /></a>
           </div>
         </div>
-        
       </div>
 
-      {/* Copyright */}
-      <div className="text-center mt-8 text-gray-500 text-sm">
-        © {new Date().getFullYear()} Testimonials.io - All Rights Reserved
-      </div>
-    </footer>
-  );
-};
-
-export default Footer;
