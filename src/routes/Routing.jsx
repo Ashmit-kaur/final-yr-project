@@ -14,22 +14,13 @@ import ProtectedRoute from "./ProtectedRoute";
 const Routing = () => {
   return (
     <Routes>
-      <Route element={<MainLayout />}>
+      <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
         <Route exact path="/" element={<Homepage />} />
         <Route exact path="/demo" element={<Demopage />} />
-      </Route>
-
-      <Route
-        element={
-          <ProtectedRoute>
-            <MainLayout />
-          </ProtectedRoute>
-        }
-      >
         <Route exact path="/dashboard" element={<Dashboard />} />
       </Route>
 
-      <Route element={<AuthLayout />}>
+      <Route element={<ProtectedRoute><AuthLayout /></ProtectedRoute>}>
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/signin" element={<Signin />} />
         <Route exact path="/verify-account" element={<VerifyAccount />} />

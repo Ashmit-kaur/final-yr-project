@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children }) => {
       async function updateReduxUser() {
         const token = localStorage.getItem("access-token");
         if (!token) {
-          navigate("/signin");
+          // navigate("/signin");
           return;
         }
         try {
@@ -28,7 +28,7 @@ const ProtectedRoute = ({ children }) => {
             error.response?.data?.message ||
               "Something went wrong. Please try again."
           );
-          navigate("/signin");
+          // navigate("/signin");
           return;
         }
       }

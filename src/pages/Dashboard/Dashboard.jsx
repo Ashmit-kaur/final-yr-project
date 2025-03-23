@@ -5,8 +5,12 @@ import { useNavigate } from 'react-router-dom'
 
 const Dashboard = () => {
 
-  const user=useSelector(selectUser)
   const navigate=useNavigate()
+  const user=useSelector(selectUser)
+
+  useEffect(()=>{
+    if(!user)navigate("/signin")
+  },[])
 
   return (
     <div>

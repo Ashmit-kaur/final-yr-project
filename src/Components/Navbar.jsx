@@ -6,7 +6,6 @@ import { logout, selectUser } from "../redux/authSlice";
 const Navbar = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  console.log(user)
 
   const handlelogout = () => {
       dispatch(logout());
