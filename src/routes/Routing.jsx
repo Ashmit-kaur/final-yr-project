@@ -13,22 +13,35 @@ import ProtectedRoute from "./ProtectedRoute";
 
 const Routing = () => {
   return (
-    <Routes>
-      <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
-        <Route exact path="/" element={<Homepage />} />
-        <Route exact path="/demo" element={<Demopage />} />
-        <Route exact path="/dashboard" element={<Dashboard />} />
-      </Route>
+    <div className="m-0 p-0 bg-gray-800">
+      <Routes>
+        <Route
+          element={
+            <ProtectedRoute>
+              <MainLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route exact path="/" element={<Homepage />} />
+          <Route exact path="/demo" element={<Demopage />} />
+          <Route exact path="/dashboard" element={<Dashboard />} />
+        </Route>
 
-      <Route element={<ProtectedRoute><AuthLayout /></ProtectedRoute>}>
-        <Route exact path="/signup" element={<Signup />} />
-        <Route exact path="/signin" element={<Signin />} />
-        <Route exact path="/verify-account" element={<VerifyAccount />} />
-        <Route exact path="/forget-password" element={<ForgetPassword />} />
-      </Route>
-    </Routes>
+        <Route
+          element={
+            <ProtectedRoute>
+              <AuthLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route exact path="/signup" element={<Signup />} />
+          <Route exact path="/signin" element={<Signin />} />
+          <Route exact path="/verify-account" element={<VerifyAccount />} />
+          <Route exact path="/forget-password" element={<ForgetPassword />} />
+        </Route>
+      </Routes>
+    </div>
   );
 };
-
 
 export default Routing;
