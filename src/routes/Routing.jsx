@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Navigate, Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
 import Signin from "../Components/Auth/Signin";
 import Signup from "../Components/Auth/Signup";
@@ -9,36 +9,31 @@ import Homepage from "../pages/Home/Homepage";
 import Demopage from "../pages/Demo/Demopage";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import MainLayout from "../layout/MainLayout";
-import ProtectedRoute from "./ProtectedRoute";
+import axios from "axios";
+import { AuthContext } from "../contexts/Authcontext";
 
 const Routing = () => {
+  const { isAuthenticated } = useContext(AuthContext);
+  console.log(isAuthenticated)
+
   return (
     <div className="m-0 p-0 bg-gray-800">
       <Routes>
-        <Route
-          element={
-            <ProtectedRoute>
-              <MainLayout />
-            </ProtectedRoute>
-          }
-        >
+        <Route element={<MainLayout />}>
           <Route exact path="/" element={<Homepage />} />
           <Route exact path="/demo" element={<Demopage />} />
-          <Route exact path="/dashboard" element={<Dashboard />} />
         </Route>
 
-        <Route
-          element={
-            <ProtectedRoute>
-              <AuthLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route exact path="/signup" element={<Signup />} />
-          <Route exact path="/signin" element={<Signin />} />
-          <Route exact path="/verify-account" element={<VerifyAccount />} />
-          <Route exact path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/signin" />} />
+
+        <Route element={<AuthLayout />}>
+          <Route path="/signup" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Signup />} />
+          <Route path="/signin" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Signin />} />
+          <Route path="/verify-account" element={<VerifyAccount />} />
+          <Route path="/forget-password" element={<ForgetPassword />} />
         </Route>
+
+        <Route path="/*" element={<div>Not Found</div>} />
       </Routes>
     </div>
   );

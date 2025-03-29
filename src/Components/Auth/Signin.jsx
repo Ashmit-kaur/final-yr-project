@@ -1,9 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux"
-import { login, selectUser } from "../../redux/authSlice";
+import { AuthContext } from "../../contexts/Authcontext.jsx";
 
 const initialValues = {
   name: "",
@@ -16,34 +15,31 @@ const Signin = () => {
   const [formData,setformData]=useState(initialValues)
   const [error, setError] = useState("");
   const [loading,setloading]=useState(false)
-  const dispatch=useDispatch();
   const navigate=useNavigate()
-  const user=useSelector(selectUser)
+  const {isAuthenticated,login}=useContext(AuthContext)
 
   useEffect(()=>{
-    if(user){
+    if(isAuthenticated){
       navigate("/dashboard")
     }
-  },[user])
+  },[isAuthenticated])
 
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      setloading(true)
-      const result=await axios.post("http://localhost:3000/api/v1/auth/signin",formData)
-      dispatch(login({user:result.data.user,token:result.data.token}))
-      alert(result.data.message)
-      setError("")
-      navigate("/dashboard")
-    }catch(error){
+    try {
+      setloading(true);
+      await login(formData); 
+      setError("");
+      navigate("/verify-account")
+    } catch (error) {
       setError(
-        error.response?.data?.message ||
-          "Something went wrong. Please try again."
+        error.response?.data?.message || "Something went wrong. Please try again."
       );
     }
-    setloading(false)
+    setloading(false);
   };
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

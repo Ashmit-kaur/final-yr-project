@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { logout, selectUser } from "../redux/authSlice";
+import React, { useContext } from "react";
+import { AuthContext } from "../contexts/Authcontext";
 
 const Navbar = () => {
-  const user = useSelector(selectUser);
-  const dispatch = useDispatch();
 
-  const handlelogout = () => {
-      dispatch(logout());
-      alert("Logged out successfully")
-      window.location.reload()
+  const {isAuthenticated,logout}=useContext(AuthContext)
+
+  const handlelogout = async () => {
+      try{
+        await logout()
+        alert("Logged out")
+      }catch(error){
+        console.log(error.response?.data?.message || "logout failed")
+      }
   };
 
   return (
@@ -20,7 +22,7 @@ const Navbar = () => {
           Testimonials
         </Link>
         <div className="flex space-x-4">
-          {!user ? (
+          {!isAuthenticated ? (
             <>
               <Link
                 to="/signin"

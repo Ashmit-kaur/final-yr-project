@@ -1,12 +1,11 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEyeSlash } from "react-icons/fa";
 
 import { FaEye } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { login, selectUser } from "../../redux/authSlice";
+import { AuthContext } from "../../contexts/Authcontext";
 
 const initialValues = {
   name: "",
@@ -20,13 +19,14 @@ const Signup = () => {
   const [confirmpass, setConfirmpass] = useState("");
   const [showpass, setshowpass] = useState(false);
   const [loading, setloading] = useState(false);
+  const {login}=useContext(AuthContext)
 
   const navigate = useNavigate();
-  const dispatch=useDispatch()
-  const user=useSelector(selectUser)
+
+  const {isAuthenticated,signUp}=useContext(AuthContext)
 
   useEffect(()=>{
-    if(user){
+    if(isAuthenticated){
       navigate("/dashboard")
     }
   },[navigate])
@@ -41,29 +41,23 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setloading(true);
+
+    if (formData.password !== confirmpass) {
+      setError("Password and confirm password didn't match.");
+      setloading(false);
+      return;
+    }
 
     try {
-      setloading(true);
-      if (formData.password !== confirmpass) {
-        setError("Password and confirm password didn't match.");
-      } else {
-        setError("");
-        const result = await axios.post(
-          "http://localhost:3000/api/v1/auth/signup",
-          formData
-        );
-        setError("");
-        localStorage.setItem('access-token',result.data.token)
-        dispatch(login({user:result.data.user,token:result.data.token}))
-        alert(result.data.message);
-        navigate("/verify-account");
-      }
+      await signUp(formData);
+      setError("");
+      alert("Account created successfully! Please verify your account.");
+      navigate("/verify-account");
     } catch (error) {
-      setError(
-        error.response?.data?.message ||
-          "Something went wrong. Please try again."
-      );
+      setError(error.response?.data?.message || "Something went wrong.");
     }
+
     setloading(false);
   };
 
