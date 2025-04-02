@@ -4,6 +4,7 @@ import { BsThreeDots } from "react-icons/bs";
 
 import axios from "axios";
 import CreateSpaceDialog from "../../Components/Space/CreateSpaceDialog";
+import Loader from "../../Components/Loader";
 
 const Dashboard = () => {
   const [spaces, setspaces] = useState([
@@ -15,10 +16,12 @@ const Dashboard = () => {
     },
   ]);
   const [openDialog, setopenDialog] = useState(false);
+  const [loading,setloading]=useState(false)
 
   useEffect(() => {
     async function fetchspaces() {
       try {
+        setloading(true)
         const result = await axios.get("http://localhost:3000/api/v1/space", {
           withCredentials: true,
         });
@@ -27,6 +30,7 @@ const Dashboard = () => {
       } catch (error) {
         console.log(error.message);
       }
+      setloading(false)
     }
     fetchspaces();
   }, []);
@@ -35,7 +39,7 @@ const Dashboard = () => {
   //  Implement search filters
   return (
     <>
-      <div className="text-white min-h-screen p-6">
+      {loading?<Loader/>:<>      <div className="text-white min-h-screen p-6">
         <p className="text-2xl font-bold mb-10">Dashboard Overview</p>
 
         <div className="grid grid-cols-2 gap-6 mb-6">
@@ -92,7 +96,7 @@ const Dashboard = () => {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-4">
                     <img
-                      src={space.logo}
+                      src={space?.logourl}
                       alt="spacelogo"
                       className="w-12 h-12 rounded-full"
                     />
@@ -114,6 +118,7 @@ const Dashboard = () => {
         )}
       </div>
       {openDialog && <CreateSpaceDialog setopenDialog={setopenDialog}/>}
+</>}
     </>
   );
 };

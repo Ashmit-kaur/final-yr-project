@@ -22,9 +22,9 @@ const Routing = () => {
         <Route element={<MainLayout />}>
           <Route exact path="/" element={<Homepage />} />
           <Route exact path="/demo" element={<Demopage />} />
+        <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/signin" />} />
         </Route>
 
-        <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/signin" />} />
 
         <Route element={<AuthLayout />}>
           <Route path="/signup" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Signup />} />

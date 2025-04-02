@@ -25,3 +25,27 @@ export async function authLogout(){
     const result=await API.post("/logout")
     return result.data
 }
+
+export async function fetchspaces(){
+
+}
+
+export async function createspace(formData){
+    try{
+        console.log(formData)
+        const result = await axios.post(
+            "http://localhost:3000/api/v1/space/addspace",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+              withCredentials: true,
+            }
+          );
+        return result.data;
+    }catch(error){
+        console.log(error.response?.data?.message)
+        alert("create space failed")
+    }
+}
