@@ -32,7 +32,7 @@ const Routing = () => {
           <Route path="/forget-password" element={<ForgetPassword />} />
         </Route>
 
-        <Route path="/*" element={<div>Not Found</div>} />
+        <Route path="/*" element={<div className="bg-white text-black">Not Found</div>} />
       </Routes>
     </div>
   );

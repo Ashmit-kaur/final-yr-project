@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { BsThreeDots } from "react-icons/bs";
 
 import axios from "axios";
 import CreateSpaceDialog from "../../Components/Space/CreateSpaceDialog";
 import Loader from "../../Components/Loader";
 import ShareSpaceLinkDialog from "../../Components/Space/ShareSpaceLinkDialog";
+import Pagination from "../../utils/Pagination";
 
 const Dashboard = () => {
   const [spaces, setspaces] = useState([
@@ -20,6 +20,16 @@ const Dashboard = () => {
   const [loading, setloading] = useState(false);
   const [openshareDialog, setopenshareDialog] = useState(false);
   const [slug, setslug] = useState("");
+
+  // Pagination
+  const [currentPage,setCurrentPage]=useState(1)
+  const itemsPerPage=9;
+
+  const totalPages=Math.ceil(spaces.length/itemsPerPage)
+  // getting spaces for currentpage
+  const indexOfLastItem=currentPage * itemsPerPage;
+  const indexOfFirstItem=indexOfLastItem-itemsPerPage;
+  const currentSpaces=spaces.slice(indexOfFirstItem,indexOfLastItem)
 
   useEffect(() => {
     async function fetchspaces() {
@@ -56,12 +66,7 @@ const Dashboard = () => {
 
               <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
                 <p
-                  className="text-lg font-semibold"
-                  onClick={() => {
-                      navigator.clipboard.writeText("hello how are you");
-                      alert("Copied to clipboard")
-                  }}
-                >
+                  className="text-lg font-semibold">
                   Total spaces
                 </p>
                 <p className="text-2xl font-bold">{spaces.length}</p>
@@ -107,7 +112,7 @@ const Dashboard = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {spaces.map((space) => (
+                {currentSpaces.map((space) => (
                   <div
                     key={space.id}
                     className="bg-gray-800 p-6 rounded-xl shadow-lg flex flex-col justify-between"
@@ -137,6 +142,7 @@ const Dashboard = () => {
               </div>
             )}
           </div>
+          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage}/>
           {openDialog && (
             <CreateSpaceDialog
               setopenDialog={setopenDialog}
