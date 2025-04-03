@@ -19,7 +19,6 @@ const Signup = () => {
   const [confirmpass, setConfirmpass] = useState("");
   const [showpass, setshowpass] = useState(false);
   const [loading, setloading] = useState(false);
-  const {login}=useContext(AuthContext)
 
   const navigate = useNavigate();
 
@@ -164,6 +163,7 @@ const Signup = () => {
             <button
               type="submit"
               className="w-full bg-indigo-600 text-white py-2 px-4 rounded-xl hover:bg-indigo-700 "
+              disabled={loading}
             >
               {loading ? "Registering..." : "Register"}
             </button>

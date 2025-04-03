@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import React from "react";
 import { checkisAuthenticated, authLogin, authLogout, authSignUp } from "../api-communicators/communicators";
+import Loader from "../Components/Loader";
 
 const AuthContext = createContext();
 
@@ -39,6 +40,10 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     checkAuth();
   }, []);
+
+  if(isLoading){
+    return <Loader/>
+  }
 
   return (
     <AuthContext.Provider value={{ isLoading, isAuthenticated, login, signUp, logout }}>

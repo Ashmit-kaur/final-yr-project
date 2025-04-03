@@ -9,7 +9,6 @@ import Homepage from "../pages/Home/Homepage";
 import Demopage from "../pages/Demo/Demopage";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import MainLayout from "../layout/MainLayout";
-import axios from "axios";
 import { AuthContext } from "../contexts/Authcontext";
 
 const Routing = () => {
