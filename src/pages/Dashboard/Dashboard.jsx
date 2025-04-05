@@ -6,6 +6,7 @@ import CreateSpaceDialog from "../../Components/Space/CreateSpaceDialog";
 import Loader from "../../Components/Loader";
 import ShareSpaceLinkDialog from "../../Components/Space/ShareSpaceLinkDialog";
 import Pagination from "../../utils/Pagination";
+import DropdownMenu from "../../Components/Space/DropdownMenu";
 
 const Dashboard = () => {
   const [spaces, setspaces] = useState([
@@ -16,20 +17,24 @@ const Dashboard = () => {
       spaces: "",
     },
   ]);
-  const [openDialog, setopenDialog] = useState(false);
-  const [loading, setloading] = useState(false);
-  const [openshareDialog, setopenshareDialog] = useState(false);
   const [slug, setslug] = useState("");
+  const [openDropdownId, setOpenDropdownId] = useState(null);
+
+  // Dialogs
+  const [openDialog, setopenDialog] = useState(false);
+  const [openshareDialog, setopenshareDialog] = useState(false);
+  // Dropdown -> share link,edit space,delete space,manage testimonials
+  const [loading, setloading] = useState(false);
 
   // Pagination
-  const [currentPage,setCurrentPage]=useState(1)
-  const itemsPerPage=9;
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
 
-  const totalPages=Math.ceil(spaces.length/itemsPerPage)
+  const totalPages = Math.ceil(spaces.length / itemsPerPage);
   // getting spaces for currentpage
-  const indexOfLastItem=currentPage * itemsPerPage;
-  const indexOfFirstItem=indexOfLastItem-itemsPerPage;
-  const currentSpaces=spaces.slice(indexOfFirstItem,indexOfLastItem)
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentSpaces = spaces.slice(indexOfFirstItem, indexOfLastItem);
 
   useEffect(() => {
     async function fetchspaces() {
@@ -48,6 +53,11 @@ const Dashboard = () => {
     fetchspaces();
   }, []);
 
+  const toggleDropdown = (id) => {
+    setOpenDropdownId(prev => (prev === id ? null : id));
+  };
+  
+
   return (
     <>
       {loading ? (
@@ -65,10 +75,7 @@ const Dashboard = () => {
               </div>
 
               <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
-                <p
-                  className="text-lg font-semibold">
-                  Total spaces
-                </p>
+                <p className="text-lg font-semibold">Total spaces</p>
                 <p className="text-2xl font-bold">{spaces.length}</p>
               </div>
             </div>
@@ -126,7 +133,14 @@ const Dashboard = () => {
                         />
                         <p className="text-lg font-semibold">{space.title}</p>
                       </div>
-                      <BsThreeDots className="text-xl cursor-pointer" />
+                      <div className="relative">
+                        <BsThreeDots
+                          className="text-xl cursor-pointer"
+                          onClick={() => toggleDropdown(space.id)}
+                        />
+
+                        {openDropdownId === space.id && <DropdownMenu id={openDropdownId}/>}
+                      </div>
                     </div>
                     <div className="text-gray-300">
                       <p>
@@ -142,7 +156,11 @@ const Dashboard = () => {
               </div>
             )}
           </div>
-          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage}/>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
           {openDialog && (
             <CreateSpaceDialog
               setopenDialog={setopenDialog}
