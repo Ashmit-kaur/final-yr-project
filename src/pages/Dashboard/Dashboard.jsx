@@ -139,7 +139,7 @@ const Dashboard = () => {
                           onClick={() => toggleDropdown(space.id)}
                         />
 
-                        {openDropdownId === space.id && <DropdownMenu id={openDropdownId}/>}
+                        {openDropdownId === space.id && <DropdownMenu id={openDropdownId} space={space} setspaces={setspaces}/>}
                       </div>
                     </div>
                     <div className="text-gray-300">
@@ -163,6 +163,7 @@ const Dashboard = () => {
           />
           {openDialog && (
             <CreateSpaceDialog
+              mode="create"
               setopenDialog={setopenDialog}
               setopenshareDialog={setopenshareDialog}
               setslug={setslug}
