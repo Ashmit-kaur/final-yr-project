@@ -20,7 +20,7 @@ const ShareSpaceLinkDialog = ({ setopen, spacename, slug }) => {
             <p 
             className="hover:text-blue-600 hover:underline font-medium cursor-pointer text-blue-500"
             onClick={() => {
-              navigator.clipboard.writeText(` http://localhost:5173/${slug}`);
+              navigator.clipboard.writeText(` http://localhost:5173/products/${slug}`);
               alert("Copied to clipboard")
             }}
             >

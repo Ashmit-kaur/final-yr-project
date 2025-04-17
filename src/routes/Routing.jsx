@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { Navigate, Outlet, Route, Routes, useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
 import Signin from "../Components/Auth/Signin";
 import Signup from "../Components/Auth/Signup";
@@ -11,10 +11,11 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import MainLayout from "../layout/MainLayout";
 import { AuthContext } from "../contexts/Authcontext";
 import ManageTestimonials from "../Components/Testimonials/ManageTestimonials";
+import Review from "../pages/Review/Review";
 
 const Routing = () => {
   const { isAuthenticated } = useContext(AuthContext);
-  console.log(isAuthenticated)
+  console.log(isAuthenticated);
 
   return (
     <div className="m-0 p-0 bg-gray-800">
@@ -22,19 +23,41 @@ const Routing = () => {
         <Route element={<MainLayout />}>
           <Route exact path="/" element={<Homepage />} />
           <Route exact path="/demo" element={<Demopage />} />
-          <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/signin" />} />
-          <Route path="/products/:slug" element={isAuthenticated?<ManageTestimonials/>:<Navigate to="/signin"/>}/>
+          <Route
+            path="/dashboard"
+            element={
+              isAuthenticated ? <Dashboard /> : <Navigate to="/signin" />
+            }
+          />
         </Route>
-
+        <Route
+          path="/products/:slug"
+          element={
+            <Review/>
+          }
+        />
 
         <Route element={<AuthLayout />}>
-          <Route path="/signup" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Signup />} />
-          <Route path="/signin" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Signin />} />
+          <Route
+            path="/signup"
+            element={
+              isAuthenticated ? <Navigate to="/dashboard" /> : <Signup />
+            }
+          />
+          <Route
+            path="/signin"
+            element={
+              isAuthenticated ? <Navigate to="/dashboard" /> : <Signin />
+            }
+          />
           <Route path="/verify-account" element={<VerifyAccount />} />
           <Route path="/forget-password" element={<ForgetPassword />} />
         </Route>
 
-        <Route path="/*" element={<div className="bg-white text-black">Not Found</div>} />
+        <Route
+          path="/*"
+          element={<div className="bg-white text-black">Not Found</div>}
+        />
       </Routes>
     </div>
   );

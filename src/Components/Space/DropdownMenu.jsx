@@ -8,10 +8,10 @@ const DropdownMenu = ({ id, space, setspaces }) => {
   const [value, setvalue] = useState("");
   const [error, setError] = useState("");
   const [editspace, seteditspace] = useState(false);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const handleDelete = async () => {
-    if (value != title) {
+    if (value != space?.title) {
       setError("Your space title isn't correct.");
       return;
     }
@@ -37,12 +37,18 @@ const DropdownMenu = ({ id, space, setspaces }) => {
         <li
           className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
           onClick={() => {
-            navigate(`/products/${space.slug}`)
+            navigate(`/products/${space.slug}`);
           }}
         >
           📁 Manage testimonials
         </li>
-        <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer">
+        <li
+          className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+          onClick={() => {
+            navigator.clipboard.writeText(`http://localhost:5173/products/${space.slug}`)
+            alert("Copied to clipboard");
+          }}
+        >
           🔗 Get the link
         </li>
         <li
@@ -74,7 +80,7 @@ const DropdownMenu = ({ id, space, setspaces }) => {
           </p>
           <p className="text-sm text-gray-300">Please be certain!</p>
           <p className="text-sm text-gray-300 mt-2">
-            Type <strong>{title}</strong> to confirm:
+            Type <strong>{space?.title}</strong> to confirm:
           </p>
 
           <input
