@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "../../Components/Loader";
-import TextReviewDialog from "../../Components/Review/TextReviewDialog";
-import VideoReviewDialog from "../../Components/Review/VideoReviewDialog";
+import TextReviewDialog from "../../Components/Review/TextReview/TextReviewDialog.jsx";
+import VideoReviewDialog from "../../Components/Review/VideoReview/VideoReviewDialog.jsx";
 
 const Review = () => {
   const { slug } = useParams();

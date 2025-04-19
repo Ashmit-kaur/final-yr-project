@@ -10,7 +10,6 @@ import Demopage from "../pages/Demo/Demopage";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import MainLayout from "../layout/MainLayout";
 import { AuthContext } from "../contexts/Authcontext";
-import ManageTestimonials from "../Components/Testimonials/ManageTestimonials";
 import Review from "../pages/Review/Review";
 
 const Routing = () => {
