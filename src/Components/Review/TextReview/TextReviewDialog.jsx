@@ -6,7 +6,10 @@ const TextReviewDialog = ({ space, setopen }) => {
   const [review, setreview] = useState({
     name: "",
     email: "",
-    file: null,
+    // attach image for any feature user liked or not liked
+    file: "",
+    // user photo
+    photo: "",
     rating: 4,
     message: "",
     consent: false,
@@ -35,7 +38,8 @@ const TextReviewDialog = ({ space, setopen }) => {
       formData.append("name", review.name);
       formData.append("email", review.email);
       formData.append("rating", review.rating);
-      formData.append("file", review.photo);
+      formData.append("photo", review.photo);
+      formData.append("textreview", review.file);
       formData.append("reviewText", review.message);
       formData.append("reviewType", "TEXT");
       setloading(true);
@@ -88,6 +92,29 @@ const TextReviewDialog = ({ space, setopen }) => {
           rows="4"
           required
         />
+
+        <div className="m-2">
+          <label htmlFor="file" className="block text-sm font-medium mb-1">
+            Upload Image
+          </label>
+          <input
+            type="file"
+            name="file"
+            id="file"
+            placeholder="Upload relevant image for review"
+            onChange={handleChange}
+            className="w-full border rounded-md px-4 py-2 text-sm"
+            accept="image/*"
+          />
+
+          {review.file && typeof review.file !== "string" && (
+            <img
+              src={URL.createObjectURL(review.file)}
+              alt="Preview"
+              className="w-24 h-24 rounded-full object-cover mt-2 mx-auto"
+            />
+          )}
+        </div>
 
         <Form review={review} setreview={setreview} />
 

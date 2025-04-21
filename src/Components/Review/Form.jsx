@@ -3,8 +3,13 @@ import { FaStar } from "react-icons/fa";
 
 const Form = ({ review, setreview }) => {
   const handleChange = (e) => {
-    const { name, value,files } = e.target;
-    setreview((prev) => ({ ...prev, [name]: value }));
+    const { name, value, files } = e.target;
+
+    if (name === "photo" && files.length > 0) {
+      setreview((prev) => ({ ...prev, photo: files[0] }));
+    } else {
+      setreview((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   return (
@@ -21,21 +26,6 @@ const Form = ({ review, setreview }) => {
             />
           );
         })}
-      </div>
-
-      <div className="m-2">
-        <label htmlFor="photo" className="block text-sm font-medium mb-1">
-          Upload your Photo(Optional)
-        </label>
-        <input
-          type="file"
-          name="file"
-          id="file"
-          placeholder="Link to your profile photo (optional)"
-          value={review.photo}
-          onChange={handleChange}
-          className="w-full border rounded-md px-4 py-2 text-sm"
-        />
       </div>
 
       <div className="m-2">
@@ -68,6 +58,42 @@ const Form = ({ review, setreview }) => {
           className="w-full border rounded-md px-4 py-2 text-sm"
           required
         />
+      </div>
+{/* 
+      <div className="m-2">
+        <label htmlFor="photo" className="block text-sm font-medium mb-1">
+          Upload your Photo(Optional)
+        </label>
+        <input
+          type="file"
+          name="photo"
+          id="photo"
+          // placeholder="Link to your profile photo (optional)"
+          onChange={handleChange}
+          className="w-full border rounded-md px-4 py-2 text-sm"
+        />
+      </div> */}
+
+      <div className="m-2">
+        <label htmlFor="file" className="block text-sm font-medium mb-1">
+          Upload Image
+        </label>
+        <input
+          type="file"
+          name="photo"
+          id="photo"
+          onChange={handleChange}
+          className="w-full border rounded-md px-4 py-2 text-sm"
+          accept="image/*"
+        />
+
+        {review.photo && typeof review.photo !== "string" && (
+          <img
+            src={URL.createObjectURL(review.photo)}
+            alt="Preview"
+            className="w-24 h-24 rounded-full object-cover mt-2 mx-auto"
+          />
+        )}
       </div>
 
       <div className="flex m-2 items-center text-sm">

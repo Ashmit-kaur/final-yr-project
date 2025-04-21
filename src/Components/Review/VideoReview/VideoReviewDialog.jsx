@@ -17,8 +17,10 @@ const VideoReviewDialog = ({ space, setopen }) => {
     name:"",
     email:"",
     rating:4,
-    file:null,
-    photo:null,
+    // videofile
+    file:"",
+    // user avatar
+    photo:"",
     consent:false
   })
 
@@ -101,7 +103,8 @@ const VideoReviewDialog = ({ space, setopen }) => {
       formData.append('name',review.name)
       formData.append('email',review.email)
       formData.append('rating',review.rating)
-      formData.append('file',file)
+      formData.append('videoreview',file)
+      formData.append('photo',review.photo)
       formData.append("reviewType","VIDEO")
       const result=await axios.post(`http://localhost:3000/api/v1/review/${space.slug}/submit`,formData,{
         headers: {
@@ -205,7 +208,6 @@ const VideoReviewDialog = ({ space, setopen }) => {
       )}
     </div>
   </div>
-  
   );
 };
 
