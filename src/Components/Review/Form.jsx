@@ -59,20 +59,6 @@ const Form = ({ review, setreview }) => {
           required
         />
       </div>
-{/* 
-      <div className="m-2">
-        <label htmlFor="photo" className="block text-sm font-medium mb-1">
-          Upload your Photo(Optional)
-        </label>
-        <input
-          type="file"
-          name="photo"
-          id="photo"
-          // placeholder="Link to your profile photo (optional)"
-          onChange={handleChange}
-          className="w-full border rounded-md px-4 py-2 text-sm"
-        />
-      </div> */}
 
       <div className="m-2">
         <label htmlFor="file" className="block text-sm font-medium mb-1">

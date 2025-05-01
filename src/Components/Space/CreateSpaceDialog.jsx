@@ -14,7 +14,7 @@ const CreateSpaceDialog = ({
   const [space, setspace] = useState({
     title: spaceData.title || "",
     description: spaceData.description || "",
-    file: spaceData.logourl || "",
+    spacelogo: spaceData.logourl || "",
   });
   const [loading, setloading] = useState(false);
 
@@ -29,7 +29,7 @@ const CreateSpaceDialog = ({
       formData.append("name", space.name);
       formData.append("description", space.description);
       formData.append("title", space.title);
-      formData.append("file", space.file);
+      formData.append("spacelogo", space.spacelogo);
       setloading(true);
       let response ;
       if(mode==="create"){
@@ -62,7 +62,7 @@ const CreateSpaceDialog = ({
     const { name, value, files } = e.target;
 
     if (name === "file" && files.length > 0) {
-      setspace((prev) => ({ ...prev, file: files[0] }));
+      setspace((prev) => ({ ...prev, spacelogo: files[0] }));
     } else {
       setspace((prev) => ({ ...prev, [name]: value }));
     }
@@ -70,7 +70,7 @@ const CreateSpaceDialog = ({
 
   return (
     <>
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="fixed inset-0 bg-black/60 bg-opacity-40 flex items-center justify-center z-50">
         <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
           {/* Live Preview Section */}
           <div className="mb-4 text-center">

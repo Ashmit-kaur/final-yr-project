@@ -37,7 +37,7 @@ const DropdownMenu = ({ id, space, setspaces }) => {
         <li
           className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
           onClick={() => {
-            navigate(`/products/${space.slug}`);
+            navigate(`/dashboard/managetestimonials/${space.slug}`);
           }}
         >
           📁 Manage testimonials

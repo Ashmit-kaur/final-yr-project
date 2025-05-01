@@ -11,6 +11,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import MainLayout from "../layout/MainLayout";
 import { AuthContext } from "../contexts/Authcontext";
 import Review from "../pages/Review/Review";
+import ManageTestimonials from "../Components/Testimonials/ManageTestimonials";
 
 const Routing = () => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -26,6 +27,12 @@ const Routing = () => {
             path="/dashboard"
             element={
               isAuthenticated ? <Dashboard /> : <Navigate to="/signin" />
+            }
+          />
+           <Route
+            path="/dashboard/managetestimonials/:slug"
+            element={
+              isAuthenticated ? <ManageTestimonials /> : <Navigate to="/signin" />
             }
           />
         </Route>
