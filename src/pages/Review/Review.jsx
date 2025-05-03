@@ -4,9 +4,11 @@ import { useParams } from "react-router-dom";
 import Loader from "../../Components/Loader";
 import TextReviewDialog from "../../Components/Review/TextReview/TextReviewDialog.jsx";
 import VideoReviewDialog from "../../Components/Review/VideoReview/VideoReviewDialog.jsx";
+import { toast } from "react-toastify";
 
 const Review = () => {
   const { slug } = useParams();
+  const BACKEND_URL=import.meta.env.VITE_BACKEND_URL
   const [space, setspace] = useState({
     logourl: "",
     title: "",
@@ -21,12 +23,12 @@ const Review = () => {
       try {
         setloading(true);
         const result = await axios.get(
-          `http://localhost:3000/api/v1/space/${slug}`
+          `${BACKEND_URL}/space/${slug}`
         );
         setspace(result.data.space);
         console.log(result.data.space);
       } catch (error) {
-        alert(error.message);
+        toast.error(error.message);
       }
       setloading(false);
     };
@@ -43,7 +45,7 @@ const Review = () => {
 
       <div className="min-h-screen flex flex-col items-center justify-center bg-white text-center px-4">
         <img
-          src={space.logourl}
+          src={space.logourl===""? null : space.logourl}
           alt="space-logo"
           className="w-80 h-56 mb-6 rounded"
         />

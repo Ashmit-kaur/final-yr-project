@@ -21,7 +21,7 @@ const ForgetPassword = () => {
     try {
       setloading(true);
       const result = await axios.post(
-        "http://localhost:3000/api/v1/auth/updatepassword",
+        `${import.meta.env.VITE_BACKEND_URL}/auth/updatepassword`,
         {
             email,
             newpassword:password,

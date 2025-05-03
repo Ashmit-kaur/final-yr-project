@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 
 import axios from "axios";
@@ -7,24 +7,27 @@ import Loader from "../../Components/Loader";
 import ShareSpaceLinkDialog from "../../Components/Space/ShareSpaceLinkDialog";
 import Pagination from "../../utils/Pagination";
 import DropdownMenu from "../../Components/Space/DropdownMenu";
+import useDebounce from "../../utils/useDebounce";
 
 const Dashboard = () => {
-  const [spaces, setspaces] = useState([
-    {
-      id: "1223",
-      title: "fsdf",
-      videos: "",
-      spaces: "",
-    },
-  ]);
+  const [spaces, setspaces] = useState([]);
   const [slug, setslug] = useState("");
   const [openDropdownId, setOpenDropdownId] = useState(null);
 
   // Dialogs
   const [openDialog, setopenDialog] = useState(false);
   const [openshareDialog, setopenshareDialog] = useState(false);
+  
   // Dropdown -> share link,edit space,delete space,manage testimonials
   const [loading, setloading] = useState(false);
+
+  // Filtering
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm=useDebounce(searchTerm,300)
+
+  const filteredSpaces = spaces.filter((space) =>
+    space.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+  );
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,13 +37,17 @@ const Dashboard = () => {
   // getting spaces for currentpage
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentSpaces = spaces.slice(indexOfFirstItem, indexOfLastItem);
+  const currentSpaces = filteredSpaces.slice(indexOfFirstItem, indexOfLastItem);
+
+  useEffect(()=>{
+    setCurrentPage(1)
+  },[debouncedSearchTerm])
 
   useEffect(() => {
     async function fetchspaces() {
       try {
         setloading(true);
-        const result = await axios.get("http://localhost:3000/api/v1/space", {
+        const result = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/space`, {
           withCredentials: true,
         });
         setspaces(result.data.spaces);
@@ -54,9 +61,8 @@ const Dashboard = () => {
   }, []);
 
   const toggleDropdown = (id) => {
-    setOpenDropdownId(prev => (prev === id ? null : id));
+    setOpenDropdownId((prev) => (prev === id ? null : id));
   };
-  
 
   return (
     <>
@@ -64,7 +70,6 @@ const Dashboard = () => {
         <Loader />
       ) : (
         <>
-          {" "}
           <div className="text-white min-h-screen p-6">
             <p className="text-2xl font-bold mb-10">Dashboard Overview</p>
 
@@ -84,7 +89,7 @@ const Dashboard = () => {
               <h2 className="text-2xl font-semibold mb-4">Spaces</h2>
               {spaces.length > 0 && (
                 <button
-                  className="m-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
+                  className="m-2 bg-blue-600 hover:bg-blue-700 cursor-pointer text-white px-4 py-2 rounded-lg transition"
                   onClick={() => {
                     setopenDialog(true);
                   }}
@@ -97,6 +102,11 @@ const Dashboard = () => {
             <div className="mb-6">
               <input
                 type="text"
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setCurrentPage(1);
+                }}
                 placeholder="Search spaces by title"
                 className="w-full bg-gray-900 text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -139,7 +149,13 @@ const Dashboard = () => {
                           onClick={() => toggleDropdown(space.id)}
                         />
 
-                        {openDropdownId === space.id && <DropdownMenu id={openDropdownId} space={space} setspaces={setspaces}/>}
+                        {openDropdownId === space.id && (
+                          <DropdownMenu
+                            id={openDropdownId}
+                            space={space}
+                            setspaces={setspaces}
+                          />
+                        )}
                       </div>
                     </div>
                     <div className="text-gray-300">

@@ -51,7 +51,7 @@ const Signup = () => {
     try {
       await signUp(formData);
       setError("");
-      alert("Account created successfully! Please verify your account.");
+      toast.success("Account created successfully! Please verify your account.");
       navigate("/verify-account");
     } catch (error) {
       setError(error.response?.data?.message || "Something went wrong.");

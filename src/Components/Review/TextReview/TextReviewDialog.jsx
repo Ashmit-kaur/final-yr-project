@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Form from "../Form";
+import { toast } from "react-toastify";
 
 const TextReviewDialog = ({ space, setopen }) => {
   const [review, setreview] = useState({
@@ -29,7 +30,7 @@ const TextReviewDialog = ({ space, setopen }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!consent) {
-      alert("Provide your consent in checkbox");
+      toast.info("Provide your consent in checkbox");
       return;
     }
     const formData = new FormData();
@@ -44,7 +45,7 @@ const TextReviewDialog = ({ space, setopen }) => {
       formData.append("reviewType", "TEXT");
       setloading(true);
       const response = await axios.post(
-        `http://localhost:3000/api/v1/review/${space.slug}/submit`,
+        `${import.meta.env.VITE_BACKEND_URL}/review/${space.slug}/submit`,
         formData,
         {
           headers: {
@@ -55,7 +56,7 @@ const TextReviewDialog = ({ space, setopen }) => {
       );
       console.log(formData);
       console.log(review);
-      alert(response.data.message);
+      toast.success(response.data.message);
       setloading(false);
       setopen(false);
     } catch (error) {
@@ -64,7 +65,7 @@ const TextReviewDialog = ({ space, setopen }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
       <div className="max-h-[90vh] w-[90%] max-w-lg overflow-y-auto bg-white rounded-xl p-6 shadow-xl">
         <div className="text-center">
           <h2 className="text-2xl font-semibold mb-2">Write a Testimonial</h2>

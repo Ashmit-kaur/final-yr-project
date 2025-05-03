@@ -2,6 +2,7 @@ import { useState } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const VerifyAccount = () => {
 
@@ -17,8 +18,8 @@ const VerifyAccount = () => {
 
     try{
         setloading(true)
-        const result=await axios.post("http://localhost:3000/api/v1/auth/verifyotp",{email,userotp:otp});
-        alert(result.data.message)
+        const result=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/verifyotp`,{email,userotp:otp});
+        toast.success(result.data.message)
         navigate("/signin")
     }catch(error){
         console.log(error.response?.data?.message || error.message);
@@ -31,8 +32,8 @@ const VerifyAccount = () => {
     e.preventDefault()
     try{
         setloading(true)
-        const result=await axios.post("http://localhost:3000/api/v1/auth/generateotp",{email})
-        alert(result.data.message)
+        const result=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/generateotp`,{email})
+        toast.success(result.data.message)
         setsuccess(true)
     }catch(error){
         console.log(error.response?.data?.message || error.message);

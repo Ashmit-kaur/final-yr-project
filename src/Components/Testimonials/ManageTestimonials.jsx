@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import TestimonialCard from "./TestimonialCard";
 import CreateSpaceDialog from "../Space/CreateSpaceDialog";
+import Tabfive from "./Tabfive";
 
 const ManageTestimonials = () => {
   const [testimonials, settestimonials] = useState([]);
@@ -13,7 +14,9 @@ const ManageTestimonials = () => {
   const [tab, settab] = useState("1");
   const [filteredtestimonials, setfilteredtestimonials] = useState([]);
 
-  const [isedit,setisedit] = useState(false);
+  const [isedit, setisedit] = useState(false);
+
+  const [loading, setloading] = useState(false);
 
   useEffect(() => {
     if (tab === "1") {
@@ -39,6 +42,7 @@ const ManageTestimonials = () => {
   // fetch space details
   useEffect(() => {
     const fetchSpaceDetails = async () => {
+      setloading(true);
       try {
         const result = await axios.get(
           `http://localhost:3000/api/v1/space/${slug}`,
@@ -51,6 +55,7 @@ const ManageTestimonials = () => {
       } catch (error) {
         console.log(error.message);
       }
+      setloading(false);
     };
     fetchSpaceDetails();
   }, [slug]);
@@ -59,6 +64,7 @@ const ManageTestimonials = () => {
   useEffect(() => {
     const fetchtestimonials = async () => {
       try {
+        setloading(true);
         const result = await axios.get(
           `http://localhost:3000/api/v1/review/${slug}`,
           {
@@ -70,6 +76,7 @@ const ManageTestimonials = () => {
       } catch (error) {
         console.log(error.message);
       }
+      setloading(false);
     };
     fetchtestimonials();
   }, [slug]);
@@ -99,13 +106,26 @@ const ManageTestimonials = () => {
           </div>
 
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
-            {filteredtestimonials.map((testimonial) => (
-              <TestimonialCard key={testimonial.id} testimonial={testimonial} />
-            ))}
+            {loading ? (
+              <p className="text-white">Loading...</p>
+            ) : tab==="5"?(<Tabfive slug={space.slug}/>): (
+              filteredtestimonials.map((testimonial) => (
+                <TestimonialCard
+                  key={testimonial.id}
+                  testimonial={testimonial}
+                />
+              ))
+            )}
           </div>
         </div>
       </div>
-      {isedit && <CreateSpaceDialog mode="edit" spaceData={space} setopenDialog={setisedit}/>}
+      {isedit && (
+        <CreateSpaceDialog
+          mode="edit"
+          spaceData={space}
+          setopenDialog={setisedit}
+        />
+      )}
     </>
   );
 };

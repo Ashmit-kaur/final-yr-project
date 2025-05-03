@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import React from "react";
 import { checkisAuthenticated, authLogin, authLogout, authSignUp } from "../api-communicators/communicators";
 import Loader from "../Components/Loader";
+import { toast } from "react-toastify";
 
 const AuthContext = createContext();
 
@@ -19,7 +20,7 @@ const AuthProvider = ({ children }) => {
     authLogin(credentials)
       .then(() => setIsAuthenticated(true))
       .catch((error) => {
-        alert(error.response?.data?.message || "Login failed");
+        toast.error(error.response?.data?.message || "Login failed");
         setIsAuthenticated(false);
       });
 
@@ -27,14 +28,14 @@ const AuthProvider = ({ children }) => {
     authSignUp(credentials)
       .then(() => setIsAuthenticated(true))
       .catch((error) => {
-        alert(error.response?.data?.message || "Sign-up failed");
+        toast.error(error.response?.data?.message || "Sign-up failed");
         setIsAuthenticated(false);
       });
 
   const logout = () => {
     authLogout()
       .then(() => setIsAuthenticated(false))
-      .catch((error) => alert(error.response?.data?.message || "Logout failed"));
+      .catch((error) => toast.error(error.response?.data?.message || "Logout failed"));
   };
 
   useEffect(() => {

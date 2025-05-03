@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import CreateSpaceDialog from "./CreateSpaceDialog";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const DropdownMenu = ({ id, space, setspaces }) => {
   const [confirmdelete, setconfirmDelete] = useState(false);
@@ -17,19 +18,18 @@ const DropdownMenu = ({ id, space, setspaces }) => {
     }
     try {
       const result = await axios.delete(
-        `http://localhost:3000/api/v1/space/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/space/${id}`,
         {
           withCredentials: true,
         }
       );
-      alert(result.data?.message);
+      toast.success(result.data?.message);
       setspaces((prevSpaces) => prevSpaces.filter((space) => space.id !== id));
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  const handleDuplicate = () => {};
 
   return (
     <div className="absolute right-0 mt-2 w-56 bg-gray-900 text-white rounded-lg shadow-lg z-10">
@@ -46,7 +46,7 @@ const DropdownMenu = ({ id, space, setspaces }) => {
           className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
           onClick={() => {
             navigator.clipboard.writeText(`http://localhost:5173/products/${space.slug}`)
-            alert("Copied to clipboard");
+            toast.info("Copied to clipboard");
           }}
         >
           🔗 Get the link
@@ -56,14 +56,6 @@ const DropdownMenu = ({ id, space, setspaces }) => {
           onClick={() => seteditspace(true)}
         >
           ✏️ Edit the space
-        </li>
-        <li
-          className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
-          onClick={() => {
-            console.log("Duplicate", space.id);
-          }}
-        >
-          📄 Duplicate the space
         </li>
         <li
           className="px-4 py-2 text-red-400 hover:bg-gray-700 cursor-pointer"

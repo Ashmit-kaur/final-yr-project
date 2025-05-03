@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FormData from "form-data";
 import { createspace } from "../../api-communicators/communicators";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const CreateSpaceDialog = ({
   mode,
@@ -31,20 +32,24 @@ const CreateSpaceDialog = ({
       formData.append("title", space.title);
       formData.append("spacelogo", space.spacelogo);
       setloading(true);
-      let response ;
-      if(mode==="create"){
+      let response;
+      if (mode === "create") {
         response = await createspace(formData);
-      }else{
-        response=await axios.patch(`http://localhost:3000/api/v1/space/update/${spaceData.id}`,formData,{
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        })
+      } else {
+        response = await axios.patch(
+          `${import.meta.env.VITE_BACKEND_URL}/space/update/${spaceData.id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            withCredentials: true,
+          }
+        );
       }
-       
+
       if (response?.space?.slug) {
-        alert(response?.message);
+        toast.success(response?.message);
         console.log("Space created successfully");
         setslug(response?.space?.slug);
         setopenshareDialog(true);
@@ -53,7 +58,7 @@ const CreateSpaceDialog = ({
         setopenDialog(false);
       }, 1000);
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
     }
     setloading(false);
   };
@@ -126,6 +131,13 @@ const CreateSpaceDialog = ({
                 className="mt-1 p-2 w-full border text-black rounded-md focus:ring focus:ring-blue-300"
                 required
               />
+              {space.spacelogo && space.spacelogo != "" && (
+                <img
+                  src={space.spacelogo}
+                  alt="Preview"
+                  className="w-24 h-24 rounded-full object-cover mt-2 mx-auto"
+                />
+              )}
             </div>
 
             <div>
@@ -166,7 +178,7 @@ const CreateSpaceDialog = ({
 
             <button
               type="submit"
-              className="w-full mb-3 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+              className="w-full mb-3 cursor-pointer bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
               disabled={loading}
             >
               {loading
@@ -180,7 +192,7 @@ const CreateSpaceDialog = ({
           </form>
 
           <button
-            className="w-full bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition"
+            className="w-full bg-red-600 cursor-pointer text-white py-2 rounded-md hover:bg-red-700 transition"
             onClick={() => setopenDialog(false)}
           >
             Cancel

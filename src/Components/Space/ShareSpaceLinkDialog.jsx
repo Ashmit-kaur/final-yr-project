@@ -1,11 +1,10 @@
 import React from "react";
+import { toast } from "react-toastify";
 
 const ShareSpaceLinkDialog = ({ setopen, spacename, slug }) => {
-  console.log(spacename);
-  console.log(slug);
   return (
     <>
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="fixed inset-0 flex items-center justify-center bg-black/60 ">
         <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
           <div className="mb-4 text-center">
 
@@ -21,7 +20,7 @@ const ShareSpaceLinkDialog = ({ setopen, spacename, slug }) => {
             className="hover:text-blue-600 hover:underline font-medium cursor-pointer text-blue-500"
             onClick={() => {
               navigator.clipboard.writeText(` http://localhost:5173/products/${slug}`);
-              alert("Copied to clipboard")
+              toast.info("Copied to clipboard")
             }}
             >
               http://localhost:5173/{slug}
@@ -30,7 +29,7 @@ const ShareSpaceLinkDialog = ({ setopen, spacename, slug }) => {
           </div>
 
           <button
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+            className="w-full bg-blue-600 text-white py-2 cursor-pointer rounded-md hover:bg-blue-700 transition"
             onClick={() => {
               setopen(false);
               window.location.reload();

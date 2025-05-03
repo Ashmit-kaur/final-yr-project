@@ -3,6 +3,7 @@ import { GoDeviceCameraVideo } from "react-icons/go";
 import Webcam from "react-webcam";
 import Form from "../Form";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const VideoReviewDialog = ({ space, setopen }) => {
   console.log("Video review");
@@ -86,11 +87,11 @@ const VideoReviewDialog = ({ space, setopen }) => {
     console.log(review)
     const formData=new FormData()
     if(!consent){
-      alert("Provide your consent in checkbox")
+      toast.info("Provide your consent in checkbox")
       return;
     }
     if(!review.name || !review.email || !review.rating || !review.file){
-      alert("Provide all the fields")
+      toast.info("Provide all the fields")
       return;
     }
     try{
@@ -106,13 +107,13 @@ const VideoReviewDialog = ({ space, setopen }) => {
       formData.append('videoreview',file)
       formData.append('photo',review.photo)
       formData.append("reviewType","VIDEO")
-      const result=await axios.post(`http://localhost:3000/api/v1/review/${space.slug}/submit`,formData,{
+      const result=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/review/${space.slug}/submit`,formData,{
         headers: {
           "Content-Type": "multipart/form-data",
         },
         withCredentials: true,
       })
-      alert(result.data.message)
+      toast.success(result.data.message)
     }catch(error){
       console.log(error.message)
     }
@@ -121,7 +122,7 @@ const VideoReviewDialog = ({ space, setopen }) => {
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
     <div className="max-h-[90vh] overflow-y-auto bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl space-y-4 text-gray-800">
       
       <div className="flex flex-col items-center space-y-2">

@@ -1,18 +1,19 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const TestimonialCard = ({ testimonial }) => {
   const [isLiked, setIsLiked] = useState(testimonial.isfavourite);
   const handleLike = async () => {
     try {
       const result = await axios.patch(
-        `http://localhost:3000/api/v1/review/${testimonial.id}/addtofavourite`,{},
+        `${import.meta.env.VITE_BACKEND_URL}/review/${testimonial.id}/addtofavourite`,{},
         {
           withCredentials: true,
         }
       );
       setIsLiked(result.data.isfavourite);
-      alert(result.data.message);
+      toast.success(result.data.message);
     } catch (error) {
       console.log(error.message);
     }

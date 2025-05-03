@@ -15,7 +15,6 @@ import ManageTestimonials from "../Components/Testimonials/ManageTestimonials";
 
 const Routing = () => {
   const { isAuthenticated } = useContext(AuthContext);
-  console.log(isAuthenticated);
 
   return (
     <div className="m-0 p-0 bg-gray-800">
