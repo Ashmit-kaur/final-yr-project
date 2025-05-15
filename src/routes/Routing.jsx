@@ -12,6 +12,7 @@ import MainLayout from "../layout/MainLayout";
 import { AuthContext } from "../contexts/Authcontext";
 import Review from "../pages/Review/Review";
 import ManageTestimonials from "../Components/Testimonials/ManageTestimonials";
+import Testimonial from "../Components/Testimonials/Testimonial";
 
 const Routing = () => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -41,6 +42,8 @@ const Routing = () => {
             <Review/>
           }
         />
+
+        <Route path="/share/:id" element={<Testimonial/>}/>
 
         <Route element={<AuthLayout />}>
           <Route

@@ -1,7 +1,10 @@
 import React from "react";
 import GimmeFeed from "../../assets/GimmeFeed.png";
+import { useNavigate } from "react-router-dom";
 
 const Homepage = () => {
+
+  const navigate=useNavigate();
   return (
     <section className="mb-4 ">
       <img
@@ -44,7 +47,9 @@ const Homepage = () => {
               is designed to enhance collaboration, feedback gathering, and
               engagement among developers and users.
             </p>
-            <button className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-md mt-6">
+            <button className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-md mt-6"
+            onClick={()=>navigate("/signup")}
+            >
               Get Started
             </button>
           </div>

@@ -8,6 +8,7 @@ const TabSeven = ({settab}) => {
     }
 
   return (
+    <>
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-3xl">
         <h2 className="text-2xl text-black font-semibold text-center mb-4">Embed a single testimonial</h2>
@@ -68,6 +69,9 @@ const TabSeven = ({settab}) => {
         </div>
       </div>
     </div>
+
+    
+    </>
   );
 };
 
