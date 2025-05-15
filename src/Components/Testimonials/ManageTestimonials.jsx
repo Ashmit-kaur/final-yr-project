@@ -5,6 +5,7 @@ import axios from "axios";
 import TestimonialCard from "./TestimonialCard";
 import CreateSpaceDialog from "../Space/CreateSpaceDialog";
 import Tabfive from "./Tabfive";
+import WidgetDialog from "../Widgets/WidgetDialog";
 
 const ManageTestimonials = () => {
   const [testimonials, settestimonials] = useState([]);
@@ -15,7 +16,6 @@ const ManageTestimonials = () => {
   const [filteredtestimonials, setfilteredtestimonials] = useState([]);
 
   const [isedit, setisedit] = useState(false);
-
   const [loading, setloading] = useState(false);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const ManageTestimonials = () => {
       setloading(true);
       try {
         const result = await axios.get(
-          `http://localhost:3000/api/v1/space/${slug}`,
+          `${import.meta.env.VITE_BACKEND_URL}/space/${slug}`,
           {
             withCredentials: true,
           }
@@ -66,7 +66,7 @@ const ManageTestimonials = () => {
       try {
         setloading(true);
         const result = await axios.get(
-          `http://localhost:3000/api/v1/review/${slug}`,
+          `${import.meta.env.VITE_BACKEND_URL}/review/${slug}`,
           {
             withCredentials: true,
           }
@@ -126,6 +126,7 @@ const ManageTestimonials = () => {
           setopenDialog={setisedit}
         />
       )}
+      {tab=="6" && <WidgetDialog slug={slug}/>}
     </>
   );
 };

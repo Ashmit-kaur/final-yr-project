@@ -72,7 +72,7 @@ const VerifyAccount = () => {
           <div>
             <button
               type="submit"
-              className={`w-full ${success?"hidden":"block"} bg-indigo-600 text-white py-2 px-4 rounded-xl hover:bg-indigo-700 `}
+              className={`w-full cursor-pointer ${success?"hidden":"block"} bg-indigo-600 text-white py-2 px-4 rounded-xl hover:bg-indigo-700 `}
               onClick={handlesendotp}
               disabled={loading}
             >
@@ -98,7 +98,7 @@ const VerifyAccount = () => {
               required
             />
             <button
-              className="w-auto text-red-600 hover:text-red-700 shadow-xl  "
+              className="w-auto text-red-600 cursor-pointer hover:text-red-700 shadow-xl  "
             >
               Resend otp
             </button>
@@ -112,7 +112,7 @@ const VerifyAccount = () => {
           <div>
             <button
               type="submit"
-              className={`${success ? "block" : "hidden"} w-full bg-indigo-600 text-white py-2 px-4 rounded-xl hover:bg-indigo-700 `}
+              className={`cursor-pointer ${success ? "block" : "hidden"} w-full bg-indigo-600 text-white py-2 px-4 rounded-xl hover:bg-indigo-700 `}
               disabled={loading}
             >
               {loading?"Verifying":"Verify"}

@@ -17,7 +17,7 @@ const Routing = () => {
   const { isAuthenticated } = useContext(AuthContext);
 
   return (
-    <div className="m-0 p-0 bg-gray-800">
+    // <div className="m-0 p-0 bg-gray-800">
       <Routes>
         <Route element={<MainLayout />}>
           <Route exact path="/" element={<Homepage />} />
@@ -64,7 +64,7 @@ const Routing = () => {
           element={<div className="bg-white text-black">Not Found</div>}
         />
       </Routes>
-    </div>
+    // </div>
   );
 };
 

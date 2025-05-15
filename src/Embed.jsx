@@ -1,32 +1,40 @@
-import React from "react";
+export default function Embed({ data, layout }) {
+  if (!data || data.length === 0) {
+    return <div>No favourites found.</div>;
+  }
 
-const Embed = () => {
-  const favourites=window.__FAVOURITES__ || []
-  console.log("Embed.jsx favourites",favourites)
+  console.log(data);
+
   return (
-    <div style={{ padding: "1rem", fontFamily: "Arial, sans-serif" }}>
-      {favourites.map((item, i) => (
-        <div
-          key={i}
-          style={{
-            background: "#fff",
-            marginBottom: "1rem",
-            padding: "1rem",
-            borderRadius: "8px",
-            boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-          }}
-        >
-          <h4>{item.name}</h4>
-          <p>{item.reviewText}</p>
-          {item.reviewType === "VIDEO" ? (
-            <video src={item.videoUrl} controls width="100%" />
-          ) : (
-            item.photo && <img src={item.photo} alt={item.name} width="100" />
-          )}
+    <div style={{ padding: "1rem", fontFamily: "Arial" }}>
+      <h2>Favourite Testimonials ({layout} layout)</h2>
+      {layout === "card" ? (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+          {data.map((item, i) => (
+            <div
+              key={i}
+              style={{
+                width: "200px",
+                border: "1px solid #ccc",
+                padding: "1rem",
+                borderRadius: "8px",
+                background: "#fff",
+              }}
+            >
+              <h4 className="text-black">{item.name}</h4>
+              <p>{item.email}</p>
+            </div>
+          ))}
         </div>
-      ))}
+      ) : (
+        <ul>
+          {data.map((item, i) => (
+            <li key={i} style={{ marginBottom: "0.5rem" }}>
+              <strong>{item.name}:</strong> {item.message}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
-};
-
-export default Embed;
+}

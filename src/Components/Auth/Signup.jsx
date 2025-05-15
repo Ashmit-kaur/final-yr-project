@@ -6,6 +6,7 @@ import { FaEyeSlash } from "react-icons/fa";
 
 import { FaEye } from "react-icons/fa";
 import { AuthContext } from "../../contexts/Authcontext";
+import { toast } from "react-toastify";
 
 const initialValues = {
   name: "",
@@ -162,7 +163,7 @@ const Signup = () => {
           <div>
             <button
               type="submit"
-              className="w-full bg-indigo-600 text-white py-2 px-4 rounded-xl hover:bg-indigo-700 "
+              className="w-full bg-indigo-600 cursor-pointer text-white py-2 px-4 rounded-xl hover:bg-indigo-700 "
               disabled={loading}
             >
               {loading ? "Registering..." : "Register"}

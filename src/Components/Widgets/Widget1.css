@@ -1,0 +1,40 @@
+/* Widget1.css */
+
+.scroll-container {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .scroll-content {
+    display: flex;
+    flex-direction: column;
+    animation: scroll-up 10s linear infinite;
+  }
+  
+  @keyframes scroll-up {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-50%);
+    }
+  }
+  
+  /* Optional styling for the testimonial items */
+  .item {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .video-preview {
+    height: 40px;
+  }
+  
+  .testimonial-text,
+  .testimonial-name {
+    margin: 0 0.5rem;
+  }

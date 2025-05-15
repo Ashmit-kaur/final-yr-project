@@ -36,6 +36,7 @@ const CreateSpaceDialog = ({
       if (mode === "create") {
         response = await createspace(formData);
       } else {
+        console.log(spaceData.id)
         response = await axios.patch(
           `${import.meta.env.VITE_BACKEND_URL}/space/update/${spaceData.id}`,
           formData,
@@ -131,9 +132,9 @@ const CreateSpaceDialog = ({
                 className="mt-1 p-2 w-full border text-black rounded-md focus:ring focus:ring-blue-300"
                 required
               />
-              {space.spacelogo && space.spacelogo != "" && (
+              {mode=="create" && space.spacelogo!=""  && (
                 <img
-                  src={space.spacelogo}
+                  src={URL.createObjectURL(space.spacelogo)}
                   alt="Preview"
                   className="w-24 h-24 rounded-full object-cover mt-2 mx-auto"
                 />
