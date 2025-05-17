@@ -77,7 +77,6 @@ const Testimonial = () => {
               ></iframe>
             </div>
           )}
-          {/* rating */}
             <div className="flex justify-center items-center mb-4">
                 {Array.from({ length: testimonial.rating }, (_, index) => (
                 <span key={index} className="text-yellow-500 text-2xl">

@@ -1,7 +1,7 @@
 import React from "react";
 import TabSeven from "./TabSeven";
 
-const Sidebar = ({ tab, settab }) => {
+const Sidebar = ({ tab, settab,space }) => {
   return (
     <>
     <aside className="w-full md:w-64 h-full bg-[#1f1f1f] p-4 space-y-4">
@@ -55,7 +55,7 @@ const Sidebar = ({ tab, settab }) => {
         </li>
       </ul>
     </aside>
-    {tab==="7" && <TabSeven settab={settab}/>}
+    {tab==="7" && <TabSeven settab={settab} space={space}/>}
     </>
   );
 };

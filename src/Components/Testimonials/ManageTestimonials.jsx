@@ -100,7 +100,7 @@ const ManageTestimonials = () => {
         </nav>
         <div className="flex flex-1">
           <div className="w-[250px] bg-gray-900 min-h-screen border-r border-gray-700">
-            <Sidebar tab={tab} settab={settab} />
+            <Sidebar tab={tab} settab={settab} space={space}/>
           </div>
 
           <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gradient-to-b from-black via-gray-900 to-black">
