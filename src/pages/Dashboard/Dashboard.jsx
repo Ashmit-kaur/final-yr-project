@@ -105,20 +105,20 @@ const Dashboard = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
               <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all">
-                <p className="text-lg font-semibold text-gray-700 mb-2">
-                  Total Testimonials
+                <p className="text-2xl text-center font-semibold text-gray-700 mb-2">
+                  Testimonials
                 </p>
 
-                <div className="mt-4 h-96 w-96 mx-auto text-center">
+                <div className="mt-10 h-96 w-96 mx-auto text-center">
                   <PieChart data={reviewtypedata} />
                 </div>
               </div>
 
               <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all">
-                <p className="text-lg font-semibold text-gray-700 mb-2">
-                  Total Spaces
+                <p className="text-2xl text-center font-semibold text-gray-700 mb-2">
+                  Spaces
                 </p>
-                <p className="text-3xl font-extrabold text-blue-600">
+                <p className="text-3xl text-center font-extrabold text-blue-600">
                   {spaces.length}
                 </p>
 

@@ -7,11 +7,7 @@ const MainLayout = () => {
   return (
     <>
       <Navbar />
-      {/* <div className="flex justify-center items-center min-h-[80vh] p-6">
-        <div className="w-full p-6 rounded-2xl shadow-lg"> */}
           <Outlet />
-        {/* </div>
-      </div> */}
       <Footer />
     </>
   );

@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../contexts/Authcontext";
 import { toast } from "react-toastify";
 import GimmeFeedbacksLogo from "../assets/GimmeFeedbacksLogo.png";
+import { IoIosLogOut } from "react-icons/io";
 
 const Navbar = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
@@ -23,7 +24,7 @@ const Navbar = () => {
         <Link to="/" className="flex items-center">
           <img
             src={GimmeFeedbacksLogo}
-            className="h-[4.5em] w-auto ml-2 sm:h-[5em] md:h-[5.5em]"
+            className="ml-2 sm:h-[5em] md:h-[7.5em]"
             alt="GimmeFeedbacks"
           />
         </Link>
@@ -54,9 +55,9 @@ const Navbar = () => {
               </button>
               <button
                 onClick={handlelogout}
-                className="px-4 cursor-pointer py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-red-600 hover:text-white transition duration-200"
+                className="cursor-pointer text-2xl"
               >
-                Logout
+                <IoIosLogOut />
               </button>
             </>
           )}

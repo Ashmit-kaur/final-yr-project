@@ -12,12 +12,12 @@ const Tabfive = ({slug}) => {
       <div>
         <p className="text-sm text-gray-400 mb-1">On our hosted page</p>
         <a
-          href={`http://localhost:5173/products/${slug}`}
+          href={`${import.meta.env.VITE_FRONTEND_URL}/products/${slug}`}
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-400 hover:underline"
         >
-          http://localhost:5173/products/{slug}
+          {import.meta.env.VITE_FRONTEND_URL}/products/{slug}
         </a>
       </div>
     </div>

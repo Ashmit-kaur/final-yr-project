@@ -12,7 +12,7 @@ const TabSeven = ({ settab, space }) => {
   };
 
   const handleCopy = () => {
-    const embedCode = `<iframe src="http://localhost:3000/api/v1/review/embed/${space.slug}/${type}" width="100%" height="400" frameborder="0"></iframe>`;
+    const embedCode = `<iframe src="${import.meta.env.VITE_BACKEND_URL}/review/embed/${space.slug}/${type}" width="100%" height="400" frameborder="0"></iframe>`;
     navigator.clipboard.writeText(embedCode);
     toast.info("Embed code copied to clipboard!");
   };
@@ -118,7 +118,7 @@ const TabSeven = ({ settab, space }) => {
             </p>
             <textarea
               className="w-full h-32 border text-black border-gray-300 rounded-lg p-4 resize-none"
-              value={`<iframe src="http://localhost:3000/api/v1/embed/${space.slug}/${type}" width="100%" height="400" frameborder="0"></iframe>`}
+              value={`<iframe src="${import.meta.env.VITE_BACKEND_URL}/embed/${space.slug}/${type}" width="100%" height="400" frameborder="0"></iframe>`}
               readOnly
             ></textarea>
             <div className="flex justify-between mt-4">

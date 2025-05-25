@@ -10,7 +10,7 @@ const Homepage = () => {
       <img
         src={GimmeFeed}
         alt="Gimme Feedbacks Demo"
-        className="w-full object-cover max-h-[500px]"
+        className="w-full object-cover max-h-[675px]"
       />
 
       <section className="bg-gray-100 py-12 px-4">
@@ -39,7 +39,7 @@ const Homepage = () => {
                 sleek and user-friendly interface
               </span>
               , Gimme Feedbacks aims to simplify the process of integrating
-              robust commenting functionality into websites, applications, and
+              robust feedbacks functionality into websites, applications, and
               other software projects. This{" "}
               <span className="font-semibold text-black">
                 powerful and scalable Feedbacks server
@@ -54,7 +54,6 @@ const Homepage = () => {
             </button>
           </div>
 
-          {/* Right Side - Image */}
           <div className="flex-1">
             <img
               src={GimmeFeed}

@@ -45,7 +45,7 @@ const DropdownMenu = ({ id, space, setspaces }) => {
         <li
           className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
           onClick={() => {
-            navigator.clipboard.writeText(`http://localhost:5173/products/${space.slug}`)
+            navigator.clipboard.writeText(`${import.meta.env.VITE_FRONTEND_URL}/products/${space.slug}`)
             toast.info("Copied to clipboard");
           }}
         >

@@ -110,7 +110,7 @@ const CreateSpaceDialog = ({
                   required
                 />
                 <span className="text-xs text-gray-500">
-                  Public URL: http://localhost:5173/your-space
+                  Public URL: {import.meta.env.VITE_FRONTEND_URL}/your-space
                 </span>
               </div>
             ) : (

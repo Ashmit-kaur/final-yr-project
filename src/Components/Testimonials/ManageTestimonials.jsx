@@ -6,6 +6,7 @@ import TestimonialCard from "./TestimonialCard";
 import CreateSpaceDialog from "../Space/CreateSpaceDialog";
 import Tabfive from "./Tabfive";
 import WidgetDialog from "../Widgets/WidgetDialog";
+import { CiEdit } from "react-icons/ci";
 
 const ManageTestimonials = () => {
   const [testimonials, settestimonials] = useState([]);
@@ -81,44 +82,58 @@ const ManageTestimonials = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-black text-white flex flex-col font-sans">
-        <nav className="bg-gray-800 flex items-center w-full px-6 h-[100px] justify-between shadow-md">
+      <div className="min-h-screen bg-gray-100 text-gray-900 font-sans flex flex-col">
+        <nav className="bg-white px-6 h-[100px] flex items-center justify-between shadow-md border-b border-gray-200">
           <div className="flex items-center gap-4">
             <img
               src={space?.logourl}
               alt="Space"
-              className="w-16 h-16 rounded-full border-2 border-blue-400 shadow-lg"
+              className="w-16 h-16 rounded-full border-2 border-blue-500 shadow-md object-cover"
             />
-            <h1 className="text-2xl font-bold tracking-wide">{space?.title}</h1>
+            <h1 className="text-3xl font-bold tracking-wide text-gray-800">
+              {space?.title}
+            </h1>
           </div>
           <button
-            className="bg-blue-600 cursor-pointer hover:bg-blue-700 transition-colors px-5 py-2 rounded-lg font-medium shadow-lg"
             onClick={() => setisedit(true)}
+            className=" py-2 cursor-pointer  text-2xl "
           >
-            ✏️ Edit Space
+            <CiEdit />
           </button>
         </nav>
-        <div className="flex flex-1">
-          <div className="w-[250px] bg-gray-900 min-h-screen border-r border-gray-700">
-            <Sidebar tab={tab} settab={settab} space={space}/>
-          </div>
 
-          <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gradient-to-b from-black via-gray-900 to-black">
+        <div className="flex flex-1 overflow-hidden">
+          <aside className="w-[250px] bg-white border-r border-gray-200 hidden md:block shadow-sm">
+            <Sidebar tab={tab} settab={settab} space={space} />
+          </aside>
+
+          <main className="flex-1 overflow-y-auto p-6 bg-gradient-to-b from-gray-100 via-white to-gray-100">
             {loading ? (
-              <p className="text-white text-lg animate-pulse">Loading...</p>
+              <div className="flex items-center justify-center h-full">
+                <p className="text-gray-600 text-lg animate-pulse">
+                  Loading...
+                </p>
+              </div>
             ) : tab === "5" ? (
               <Tabfive slug={space.slug} />
+            ) : filteredtestimonials.length === 0 ? (
+              <div className="flex items-center justify-center h-full">
+                <p className="text-gray-600 text-lg">No testimonials found.</p>
+              </div>
             ) : (
-              filteredtestimonials.map((testimonial) => (
-                <TestimonialCard
-                  key={testimonial.id}
-                  testimonial={testimonial}
-                />
-              ))
+              <div className="grid gap-6">
+                {filteredtestimonials.map((testimonial) => (
+                  <TestimonialCard
+                    key={testimonial.id}
+                    testimonial={testimonial}
+                  />
+                ))}
+              </div>
             )}
-          </div>
+          </main>
         </div>
       </div>
+
       {isedit && (
         <CreateSpaceDialog
           mode="edit"
@@ -126,7 +141,8 @@ const ManageTestimonials = () => {
           setopenDialog={setisedit}
         />
       )}
-      {tab === "6" && <WidgetDialog slug={slug} />}
+
+      {tab === "6" && <WidgetDialog slug={slug} settab={settab} />}
     </>
   );
 };
