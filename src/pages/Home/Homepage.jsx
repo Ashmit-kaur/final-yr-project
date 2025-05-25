@@ -21,7 +21,6 @@ const Homepage = () => {
         </div>
 
         <div className="max-w-6xl mx-auto bg-white shadow-2xl rounded-2xl flex flex-col md:flex-row items-center p-8 gap-10">
-          {/* Left Side - Text + Button */}
           <div className="flex-1 text-left">
             <p className="text-gray-800 text-lg leading-relaxed">
               <span className="bg-gray-900 text-white px-2 py-1 rounded font-medium">

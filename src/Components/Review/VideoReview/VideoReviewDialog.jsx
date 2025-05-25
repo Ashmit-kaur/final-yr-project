@@ -18,9 +18,7 @@ const VideoReviewDialog = ({ space, setopen }) => {
     name:"",
     email:"",
     rating:4,
-    // videofile
     file:"",
-    // user avatar
     photo:"",
     consent:false
   })

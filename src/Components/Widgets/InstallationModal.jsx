@@ -2,7 +2,7 @@ import { IoMdClose } from "react-icons/io";
 import { toast } from "react-toastify";
 
 export default function InstallationModal({ setIsOpen,slug,layout }) {
-  const htmlCode = `<div id="embed-root"></div>
+  const htmlCode = `<div id="gimme-feedbacks-embed-root"></div>
 <script src="${import.meta.env.VITE_BACKEND_URL}/review/embed/${slug}/${layout}/embed.js"></script>`;
 
   const handleCopy = () => {
