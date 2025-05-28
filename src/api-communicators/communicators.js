@@ -26,15 +26,11 @@ export async function authLogout(){
     return result.data
 }
 
-export async function fetchspaces(){
-
-}
-
 export async function createspace(formData){
     try{
         console.log(formData)
         const result = await axios.post(
-            "http://localhost:3000/api/v1/space/addspace",
+            `${import.meta.env.VITE_BACKEND_URL}/space/addspace`,
             formData,
             {
               headers: {
