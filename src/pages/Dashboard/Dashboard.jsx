@@ -68,7 +68,10 @@ const Dashboard = () => {
     const getgraphdata = async () => {
       try {
         const result = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/review/graph/data`
+          `${import.meta.env.VITE_BACKEND_URL}/review/graph/data`,
+          {
+            withCredentials: true,
+          }
         );
         console.log(result.data);
         const typeMap = result.data.typeCount.reduce(
